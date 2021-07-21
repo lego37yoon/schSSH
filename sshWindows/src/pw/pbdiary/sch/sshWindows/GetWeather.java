@@ -14,12 +14,12 @@ public class GetWeather {
 	static final int sinchang_x = 59;
 	static final int sinchang_y = 110;
 	
-	
-	public double getCelsius() {
-		double tem = 0.0;
+	private JSONArray getData() {
 		GetDate thisDate = new GetDate();
 		
 		URL url;
+		String weatherData = "";
+		
 		try {
 			url = new URL (host + 
 					"?serviceKey=" + apiKey + 
@@ -31,15 +31,41 @@ public class GetWeather {
 			connection.setRequestMethod("GET"); //GET 모드로 설정
 			connection.setRequestProperty("Content-type", "application/json");
 			
-			String weatherData = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-			
+			weatherData = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);	
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		JSONObject fullObjectedData = new JSONObject(weatherData);
+		
+		JSONArray currentData = fullObjectedData.getJSONObject("response")
+				.getJSONObject("body")
+				.getJSONObject("items")
+				.getJSONArray("item");
+		
+		return currentData;
+	}
+	
+	public String getCelsius() {
+		JSONObject celciusData = (JSONObject) getData().get(3);
+		String tem = celciusData.getString("obsrValue") + "℃";
 		
 		return tem;
+	}
+	
+	public String getHumidity() {
+		JSONObject humidityData = (JSONObject) getData().get(1);
+		String hum = humidityData.getString("obsrValue") + "%";
+		
+		return hum;
+	}
+	
+	public int getIfRain() {
+		JSONObject rainStatusData = (JSONObject) getData().get(0);
+		int ifRain = rainStatusData.getInt("obsrValue");
+		
+		return ifRain; //없음(0), 비(1), 비나 눈(2), 눈(3), 소나기(4)
 	}
 }
