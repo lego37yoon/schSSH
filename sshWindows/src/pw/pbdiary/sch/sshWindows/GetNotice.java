@@ -12,15 +12,16 @@ public class GetNotice {
 	}
 	
 	
-	public String[] getNormal() {
-		String[] noticeList = {"", "", "", "", ""};
+	public String[][] getNormal() {
+		String[][] noticeList = new String[2][5];
 		
 		try {
 			Document doc = getMainDocument();
 			Elements notices = doc.getElementById("jwxe_1298005370608").nextElementSibling().getElementsByClass("mlist");
 			
 			for (int i = 0; i < 5; i++) {
-				noticeList[i] = notices.get(i).child(0).html();
+				noticeList[0][i] = notices.get(i).child(0).html();
+				noticeList[1][i] = notices.get(i).child(0).attr("abs:href");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -29,15 +30,16 @@ public class GetNotice {
 		return noticeList;
 	}
 	
-	public String[] getSchool() {
-		String [] noticeSchedule = {"", "", "", "", ""};
+	public String[][] getSchool() {
+		String[][] noticeSchedule = new String[2][5];
 		
 		try {
 			Document doc = getMainDocument();
 			Elements notices = doc.getElementById("jwxe_1298005426312").nextElementSibling().getElementsByClass("mlist");
 			
 			for (int i = 0; i < 5; i++) {
-				noticeSchedule[i] = notices.get(i).child(0).html();
+				noticeSchedule[0][i] = notices.get(i).child(0).html();
+				noticeSchedule[1][i] = notices.get(i).child(0).attr("abs:href");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
