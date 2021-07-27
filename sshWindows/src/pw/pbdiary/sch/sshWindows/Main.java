@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import java.awt.Font;
 import javax.swing.JList;
 import java.awt.GridLayout;
+
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
@@ -72,11 +73,15 @@ public class Main {
 		gbc_noticeTab.fill = GridBagConstraints.BOTH;
 		noticePanel.add(noticeTab, gbc_noticeTab);
 		
-		JList normalNoticeList = new JList();
+		GetNotice parser = new GetNotice();
+		String[][] normalData = parser.getNormal();
+		String[][] schoolScheduleData = parser.getSchool();
+		
+		JList<String> normalNoticeList = new JList<String>(normalData[0]);
 		normalNoticeList.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
 		noticeTab.addTab("°øÁö»çÇ×", null, normalNoticeList, null);
 		
-		JList scheduleNoticeList = new JList();
+		JList<String> scheduleNoticeList = new JList<String>(schoolScheduleData[0]);
 		scheduleNoticeList.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
 		noticeTab.addTab("ÇÐ»ç°øÁö", null, scheduleNoticeList, null);
 		
