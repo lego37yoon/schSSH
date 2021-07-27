@@ -15,7 +15,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -54,6 +53,9 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(2, 3, 5, 5));
 		
+		Font titleFont = new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 18);
+		Font contentFont = new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14);
+		
 		JPanel noticePanel = new JPanel();
 		frame.getContentPane().add(noticePanel);
 		GridBagLayout gbl_noticePanel = new GridBagLayout();
@@ -64,7 +66,7 @@ public class Main {
 		noticePanel.setLayout(gbl_noticePanel);
 		
 		JTabbedPane noticeTab = new JTabbedPane(JTabbedPane.TOP);
-		noticeTab.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		noticeTab.setFont(titleFont);
 		GridBagConstraints gbc_noticeTab = new GridBagConstraints();
 		gbc_noticeTab.gridx = 0;
 		gbc_noticeTab.gridwidth = GridBagConstraints.REMAINDER;
@@ -78,15 +80,15 @@ public class Main {
 		String[][] schoolScheduleData = parser.getSchool();
 		
 		JList<String> normalNoticeList = new JList<String>(normalData[0]);
-		normalNoticeList.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		normalNoticeList.setFont(contentFont);
 		noticeTab.addTab("°øÁö»çÇ×", null, normalNoticeList, null);
 		
 		JList<String> scheduleNoticeList = new JList<String>(schoolScheduleData[0]);
-		scheduleNoticeList.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		scheduleNoticeList.setFont(contentFont);
 		noticeTab.addTab("ÇÐ»ç°øÁö", null, scheduleNoticeList, null);
 		
 		JButton btnGoNotice = new JButton("\uBC14\uB85C\uAC00\uAE30");
-		btnGoNotice.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnGoNotice.setFont(contentFont);
 		GridBagConstraints gbc_btnGoNotice = new GridBagConstraints();
 		gbc_btnGoNotice.gridx = 0;
 		gbc_btnGoNotice.gridwidth = GridBagConstraints.REMAINDER;
@@ -107,7 +109,7 @@ public class Main {
 		
 
 		JLabel timeTableLabel = new JLabel("\uC218\uC5C5 \uC2DC\uAC04\uD45C");
-		timeTableLabel.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		timeTableLabel.setFont(titleFont);
 		GridBagConstraints gbc_timeTableLabel = new GridBagConstraints();
 		gbc_timeTableLabel.gridx = 0;
 		gbc_timeTableLabel.gridwidth = GridBagConstraints.REMAINDER;
@@ -117,7 +119,7 @@ public class Main {
 		timeTablePanel.add(timeTableLabel, gbc_timeTableLabel);
 		
 		timeTable = new JTable();
-		timeTable.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		timeTable.setFont(contentFont);
 		GridBagConstraints gbc_timeTable = new GridBagConstraints();
 		gbc_timeTable.gridx = 0;
 		gbc_timeTable.gridwidth = GridBagConstraints.REMAINDER;
@@ -127,7 +129,7 @@ public class Main {
 		
 		JButton btnSyncTimeTable = new JButton("\uC0C8\uB85C\uACE0\uCE68");
 		btnSyncTimeTable.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnSyncTimeTable.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnSyncTimeTable.setFont(contentFont);
 		GridBagConstraints gbc_btnSyncTimeTable = new GridBagConstraints();
 		gbc_btnSyncTimeTable.gridx = 0;
 		gbc_btnSyncTimeTable.gridwidth = GridBagConstraints.REMAINDER;
@@ -146,7 +148,7 @@ public class Main {
 		todoPanel.setLayout(gbl_todoPanel);
 		
 		JLabel todoLabel = new JLabel("\uC624\uB298\uC758 \uD560 \uC77C");
-		todoLabel.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		todoLabel.setFont(titleFont);
 		GridBagConstraints gbc_todoLabel = new GridBagConstraints();
 		gbc_todoLabel.gridx = 0;
 		gbc_todoLabel.gridwidth = GridBagConstraints.REMAINDER;
@@ -156,7 +158,7 @@ public class Main {
 		todoPanel.add(todoLabel, gbc_todoLabel);
 		
 		JList todoList = new JList();
-		todoList.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		todoList.setFont(contentFont);
 		GridBagConstraints gbc_todoList = new GridBagConstraints();
 		gbc_todoList.gridx = 0;
 		gbc_todoList.weighty = 0.9;
@@ -174,19 +176,19 @@ public class Main {
 		todoManagePanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JButton btnDoneDo = new JButton("\uC644\uB8CC");
-		btnDoneDo.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnDoneDo.setFont(contentFont);
 		todoManagePanel.add(btnDoneDo);
 		
 		JButton btnDeleteDo = new JButton("\uC0AD\uC81C");
-		btnDeleteDo.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnDeleteDo.setFont(contentFont);
 		todoManagePanel.add(btnDeleteDo);
 		
 		JButton btnManageDo = new JButton("\uAD00\uB9AC");
-		btnManageDo.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnManageDo.setFont(contentFont);
 		todoManagePanel.add(btnManageDo);
 		
 		JButton btnSyncDo = new JButton("\uB3D9\uAE30\uD654");
-		btnSyncDo.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnSyncDo.setFont(contentFont);
 		todoManagePanel.add(btnSyncDo);
 		
 		// °£´Ü ¸Þ¸ð
@@ -200,7 +202,7 @@ public class Main {
 		editorPanel.setLayout(gbl_editorPanel);
 		
 		JLabel editorLabel = new JLabel("\uAC04\uB2E8 \uBA54\uBAA8");
-		editorLabel.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		editorLabel.setFont(titleFont);
 		GridBagConstraints gbc_editorLabel = new GridBagConstraints();
 		gbc_editorLabel.gridx = 0;
 		gbc_editorLabel.gridwidth = GridBagConstraints.REMAINDER;
@@ -210,7 +212,7 @@ public class Main {
 		editorPanel.add(editorLabel, gbc_editorLabel);
 		
 		JEditorPane editorPane = new JEditorPane();
-		editorPane.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		editorPane.setFont(contentFont);
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
 		gbc_editorPane.gridx = 0;
 		gbc_editorPane.gridwidth = GridBagConstraints.REMAINDER;
@@ -228,15 +230,15 @@ public class Main {
 		editorManagePanel.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JButton btnExportSimpleMemo = new JButton("\uB0B4\uBCF4\uB0B4\uAE30");
-		btnExportSimpleMemo.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnExportSimpleMemo.setFont(contentFont);
 		editorManagePanel.add(btnExportSimpleMemo);
 		
 		JButton btnSaveSimpleMemo = new JButton("\uC800\uC7A5");
-		btnSaveSimpleMemo.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		btnSaveSimpleMemo.setFont(contentFont);
 		editorManagePanel.add(btnSaveSimpleMemo);
 		
-		JButton btnRemoveAll = new JButton("\uBAA8\uB450 \uC9C0\uC6B0\uAE30");
-		btnRemoveAll.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
+		JButton btnRemoveAll = new JButton("\uC9C0\uC6B0\uAE30");
+		btnRemoveAll.setFont(contentFont);
 		editorManagePanel.add(btnRemoveAll);
 		
 		//³¯¾¾
@@ -250,7 +252,7 @@ public class Main {
 		weatherPanel.setLayout(gbl_weatherPanel);
 		
 		JLabel weatherLabel = new JLabel("\uB0A0\uC528");
-		weatherLabel.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		weatherLabel.setFont(titleFont);
 		GridBagConstraints gbc_weatherLabel = new GridBagConstraints();
 		gbc_weatherLabel.gridx = 0;
 		gbc_weatherLabel.gridwidth = GridBagConstraints.REMAINDER;
@@ -260,7 +262,7 @@ public class Main {
 		weatherPanel.add(weatherLabel, gbc_weatherLabel);
 		
 		JLabel weatherInfoTemp = new JLabel("TEST");
-		weatherLabel.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 14));
+		weatherLabel.setFont(contentFont);
 		GridBagConstraints gbc_weatherInfoTemp = new GridBagConstraints();
 		gbc_weatherInfoTemp.gridx = 0;
 		gbc_weatherInfoTemp.gridwidth = GridBagConstraints.REMAINDER;
@@ -273,22 +275,22 @@ public class Main {
 		menuPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JButton btnWebMail = new JButton("\uC6F9 \uBA54\uC77C 0\uAC74");
-		btnWebMail.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 18));
+		btnWebMail.setFont(titleFont);
 		btnWebMail.setHorizontalAlignment(SwingConstants.LEFT);
 		menuPanel.add(btnWebMail);
 		
 		JButton btnGoPortal = new JButton("\uC21C\uCC9C\uD5A5\uB300 \uD3EC\uD138");
-		btnGoPortal.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 18));
+		btnGoPortal.setFont(titleFont);
 		btnGoPortal.setHorizontalAlignment(SwingConstants.LEFT);
 		menuPanel.add(btnGoPortal);
 		
 		JButton btnGoInfoSys = new JButton("\uC885\uD569\uC815\uBCF4\uC2DC\uC2A4\uD15C");
-		btnGoInfoSys.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 18));
+		btnGoInfoSys.setFont(titleFont);
 		btnGoInfoSys.setHorizontalAlignment(SwingConstants.LEFT);
 		menuPanel.add(btnGoInfoSys);
 		
 		JButton btnSettings = new JButton("\uC124\uC815");
-		btnSettings.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 18));
+		btnSettings.setFont(titleFont);
 		btnSettings.setHorizontalAlignment(SwingConstants.LEFT);
 		menuPanel.add(btnSettings);
 		
