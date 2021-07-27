@@ -171,7 +171,7 @@ public class Main {
 		gbc_todoManagePanel.gridwidth = GridBagConstraints.REMAINDER;
 		gbc_todoManagePanel.fill = GridBagConstraints.HORIZONTAL;
 		todoPanel.add(todoManagePanel, gbc_todoManagePanel);
-		todoManagePanel.setLayout(new BoxLayout(todoManagePanel, BoxLayout.X_AXIS));
+		todoManagePanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JButton btnDoneDo = new JButton("\uC644\uB8CC");
 		btnDoneDo.setFont(new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12));
