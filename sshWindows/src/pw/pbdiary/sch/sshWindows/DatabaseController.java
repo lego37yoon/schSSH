@@ -8,13 +8,13 @@ import org.sqlite.*;
 public class DatabaseController {
 	
 	public int createNew(LocalDate day, String title, boolean done) { //할 일 생성 (알림 없음)
-		int id;
+		int id = 0;
 		
 		return id;
 	}
 	
 	public int createNew(LocalDate day, LocalDateTime alarm, String title, boolean done) { //할 일 생성 (알림 있음)
-		int id;
+		int id = 0;
 		
 		return id;
 	}
