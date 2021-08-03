@@ -62,8 +62,8 @@ public class GetWeather {
 			humidityData = (JSONObject) getData().get(1);
 			hum = humidityData.getString("obsrValue") + "%";
 		} catch (JSONException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("데이터를 제대로 가져오지 못했습니다. 인터넷 연결을 확인하세요.");
 		}
 		
 		return hum;
@@ -77,8 +77,8 @@ public class GetWeather {
 			rainStatusData = (JSONObject) getData().get(0);
 			ifRain = rainStatusData.getInt("obsrValue");
 		} catch (JSONException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("데이터를 제대로 가져오지 못했습니다. 인터넷 연결을 확인하세요.");
 		}
 		
 		return ifRain; //오류(-1), 없음(0), 비(1), 비나 눈(2), 눈(3), 소나기(4)

@@ -25,6 +25,7 @@ public class GetNotice {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("웹페이지를 가져오지 못했습니다. 인터넷 연결을 확인하세요.");
 		}
 		
 		return noticeList;
@@ -43,6 +44,7 @@ public class GetNotice {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("웹페이지를 가져오지 못했습니다. 인터넷 연결을 확인하세요.");
 		}
 	
 		return noticeSchedule;

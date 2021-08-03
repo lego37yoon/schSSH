@@ -1,24 +1,26 @@
 package pw.pbdiary.sch.sshWindows;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Component;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 import javax.swing.JFrame;
-
-import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.JTabbedPane;
-import java.awt.Font;
 import javax.swing.JList;
-import java.awt.GridLayout;
-
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
-import java.awt.Component;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
+
+import com.formdev.flatlaf.FlatLightLaf;
+import org.apache.batik.swing.JSVGCanvas;
+
 
 public class Main {
 
@@ -41,7 +43,7 @@ public class Main {
 		initialize();
 	}
 
-	/**
+	/*
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -53,6 +55,7 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(2, 3, 5, 5));
 		
+		Font celciusFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 24);
 		Font titleFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 18);
 		Font contentFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 14);
 		
@@ -74,6 +77,15 @@ public class Main {
 		gbc_noticeTab.weighty = 0.95;
 		gbc_noticeTab.fill = GridBagConstraints.BOTH;
 		noticePanel.add(noticeTab, gbc_noticeTab);
+		
+		JPanel scheduleOfUniv = new JPanel();
+		scheduleOfUniv.setLayout(new GridLayout(1, 0, 0, 0));
+		noticeTab.addTab("학사일정", null, scheduleOfUniv, null);
+		
+		JTextArea recentSchedule = new JTextArea("9(월) ~ 13일(금)" + "에\n" + "2021학년도 2학기 수강과목 확인" + "\n이 예정되어 있습니다.");
+		recentSchedule.setFont(contentFont);
+		recentSchedule.setEditable(false);
+		scheduleOfUniv.add(recentSchedule);
 		
 		GetNotice parser = new GetNotice();
 		String[][] normalData = parser.getNormal();
@@ -227,7 +239,7 @@ public class Main {
 		gbc_editorManagePanel.weighty = 0.05;
 		gbc_editorManagePanel.fill = GridBagConstraints.HORIZONTAL;
 		editorPanel.add(editorManagePanel, gbc_editorManagePanel);
-		editorManagePanel.setLayout(new GridLayout(0, 3, 0, 0));
+		editorManagePanel.setLayout(new GridLayout(1, 3, 0, 0));
 		
 		JButton btnExportSimpleMemo = new JButton("\uB0B4\uBCF4\uB0B4\uAE30");
 		btnExportSimpleMemo.setFont(contentFont);
@@ -261,18 +273,65 @@ public class Main {
 		gbc_weatherLabel.fill = GridBagConstraints.HORIZONTAL;
 		weatherPanel.add(weatherLabel, gbc_weatherLabel);
 		
-		JLabel weatherInfoTemp = new JLabel("TEST");
-		weatherLabel.setFont(contentFont);
-		GridBagConstraints gbc_weatherInfoTemp = new GridBagConstraints();
-		gbc_weatherInfoTemp.gridx = 0;
-		gbc_weatherInfoTemp.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_weatherInfoTemp.weighty = 0.95;
-		gbc_weatherInfoTemp.fill = GridBagConstraints.BOTH;
-		weatherPanel.add(weatherInfoTemp, gbc_weatherInfoTemp);
-				
+		//날씨 정보 얻기
+		GetWeather gw = new GetWeather();
+		
+		JPanel wIconAndTemp = new JPanel();
+		wIconAndTemp.setLayout(new GridLayout(1, 2, 0, 0));
+		GridBagConstraints gbc_wIconAndTemp = new GridBagConstraints();
+		gbc_wIconAndTemp.gridx = 0;
+		gbc_wIconAndTemp.weighty = 0.85;
+		gbc_wIconAndTemp.gridwidth = GridBagConstraints.REMAINDER;
+		gbc_weatherLabel.fill = GridBagConstraints.HORIZONTAL;
+		weatherPanel.add(wIconAndTemp, gbc_wIconAndTemp);
+		
+		JSVGCanvas weatherIcon = new JSVGCanvas();
+		weatherIcon.setURI(switch(gw.getIfRain()) {
+			case 1 -> "assets/icons/cloud-showers-heavy-solid.svg";
+			case 2 -> "assets/icons/umbrella-solid.svg";
+			case 3 -> "assets/icons/snowflake-regular.svg";
+			case 4 -> "assets/icons/cloud-rain-solid.svg";
+			default -> "assets/icons/temperature-high-solid.svg";
+		});
+		wIconAndTemp.add(weatherIcon);
+		
+		JLabel weatherCelcius = new JLabel(gw.getCelsius());
+		weatherCelcius.setFont(celciusFont);
+		weatherCelcius.setVerticalAlignment(SwingConstants.CENTER);
+		weatherCelcius.setHorizontalAlignment(SwingConstants.CENTER);
+		wIconAndTemp.add(weatherCelcius);
+		
+		JLabel weatherOtherInfo = new JLabel("습도 " + gw.getHumidity() + "/ PM 2.5" + "/ PM 10");
+		weatherOtherInfo.setFont(contentFont);
+		weatherOtherInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_weatherOtherInfo = new GridBagConstraints();
+		gbc_weatherOtherInfo.gridx = 0;
+		gbc_weatherOtherInfo.weighty = 0.05;
+		gbc_weatherOtherInfo.gridwidth = GridBagConstraints.REMAINDER;
+		gbc_weatherOtherInfo.fill = GridBagConstraints.HORIZONTAL;
+		weatherPanel.add(weatherOtherInfo, gbc_weatherOtherInfo);
+		
+		JPanel weatherWebBtn = new JPanel();
+		weatherWebBtn.setLayout(new GridLayout(1, 2, 0, 0));
+		GridBagConstraints gbc_weatherWebBtn = new GridBagConstraints();
+		gbc_weatherWebBtn.gridx = 0;
+		gbc_weatherWebBtn.weighty = 0.05;
+		gbc_weatherWebBtn.gridwidth = GridBagConstraints.REMAINDER;
+		gbc_weatherWebBtn.fill = GridBagConstraints.HORIZONTAL;
+		weatherPanel.add(weatherWebBtn, gbc_weatherWebBtn);
+		
+		JButton kmaGo = new JButton("기상청");
+		kmaGo.setFont(contentFont);
+		weatherWebBtn.add(kmaGo);
+		
+		JButton airKoreaGo = new JButton("에어코리아");
+		airKoreaGo.setFont(contentFont);
+		weatherWebBtn.add(airKoreaGo);
+		
+		//메뉴 패널
 		JPanel menuPanel = new JPanel();
 		frame.getContentPane().add(menuPanel);
-		menuPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		menuPanel.setLayout(new GridLayout(4, 1, 0, 0));
 		
 		JButton btnWebMail = new JButton("\uC6F9 \uBA54\uC77C 0\uAC74");
 		btnWebMail.setFont(titleFont);
