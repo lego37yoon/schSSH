@@ -275,6 +275,7 @@ public class Main {
 		
 		//날씨 정보 얻기
 		GetWeather gw = new GetWeather();
+		GetAirPM pm = new GetAirPM();
 		
 		JPanel wIconAndTemp = new JPanel();
 		wIconAndTemp.setLayout(new GridLayout(1, 2, 0, 0));
@@ -301,7 +302,7 @@ public class Main {
 		weatherCelcius.setHorizontalAlignment(SwingConstants.CENTER);
 		wIconAndTemp.add(weatherCelcius);
 		
-		JLabel weatherOtherInfo = new JLabel("습도 " + gw.getHumidity() + "/ PM 2.5" + "/ PM 10");
+		JLabel weatherOtherInfo = new JLabel("습도 " + gw.getHumidity() + "/ PM 2.5 " + pm.getPM25() + "/ PM 10 " + pm.getPM10());
 		weatherOtherInfo.setFont(contentFont);
 		weatherOtherInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_weatherOtherInfo = new GridBagConstraints();

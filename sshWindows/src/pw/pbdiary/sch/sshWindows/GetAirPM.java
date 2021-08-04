@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import org.json.JSONArray;
@@ -11,17 +12,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class GetAirPM {
-	static final String apiKey = "D8y%2BbrPeE6ZR41tB8WEIPi4XUVQo7FZ7dtM%2F8QrN8y0xQ4r9F%2FeKsl4GSlZKPwFQYIgDXaPApbQxyU8W%2F7A6oQ%3D%3D";
-	static final String host = "http://apis.data.go.kr/B552584/ArpltnStatsSvc";
+	static final String apiKey = "D8y+brPeE6ZR41tB8WEIPi4XUVQo7FZ7dtM/8QrN8y0xQ4r9F/eKsl4GSlZKPwFQYIgDXaPApbQxyU8W/7A6oQ==";
+	static final String host = "http://apis.data.go.kr/B552584/ArpltnStatsSvc/getMsrstnAcctoRDyrg";
 	static final String msrstnName = "도고면";
 	
 	private JSONArray getData() throws MalformedURLException, IOException {
 		GetDate gd = new GetDate();
 		
-		URL url = new URL(host + "?serviceKey=" + apiKey 
+		URL url = new URL(host + "?serviceKey=" + URLEncoder.encode(apiKey, StandardCharsets.UTF_8) 
 				+ "&returnType=json&numOfRows=100&pageNo=1&inqBginDt=" + gd.getYesterdayDate() 
 				+ "&inqEndDt=" + gd.getTodayDate()
-				+ "&msrstnName=" + msrstnName);
+				+ "&msrstnName=" + URLEncoder.encode(msrstnName, StandardCharsets.UTF_8));
 		
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET"); //GET 모드로 설정
