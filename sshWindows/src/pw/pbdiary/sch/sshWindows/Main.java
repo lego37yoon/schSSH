@@ -79,13 +79,20 @@ public class Main {
 		noticePanel.add(noticeTab, gbc_noticeTab);
 		
 		JPanel scheduleOfUniv = new JPanel();
-		scheduleOfUniv.setLayout(new GridLayout(1, 0, 0, 0));
+		scheduleOfUniv.setLayout(new GridLayout(2, 0, 0, 0));
 		noticeTab.addTab("학사일정", null, scheduleOfUniv, null);
 		
-		JTextArea recentSchedule = new JTextArea("9(월) ~ 13일(금)" + "에\n" + "2021학년도 2학기 수강과목 확인" + "\n이 예정되어 있습니다.");
-		recentSchedule.setFont(contentFont);
-		recentSchedule.setEditable(false);
-		scheduleOfUniv.add(recentSchedule);
+		GetDate gd = new GetDate();
+		
+		JLabel beforeNoticeSchedule = new JLabel(gd.getTodayDateHReadable());
+		beforeNoticeSchedule.setFont(titleFont);
+		beforeNoticeSchedule.setHorizontalAlignment(SwingConstants.CENTER);
+		scheduleOfUniv.add(beforeNoticeSchedule);
+		
+		JLabel scheduleList = new JLabel("<html><li> 16(월)~20(금) 2021학년도 2학기 수강신청(1차) </li><li> 16(월)~20(금) 2021학년도 2학기 휴?복학 신청 </li></html>");
+		scheduleList.setFont(contentFont);
+		scheduleList.setHorizontalAlignment(SwingConstants.LEFT);
+		scheduleOfUniv.add(scheduleList);
 		
 		GetNotice parser = new GetNotice();
 		String[][] normalData = parser.getNormal();
@@ -281,7 +288,7 @@ public class Main {
 		wIconAndTemp.setLayout(new GridLayout(1, 2, 0, 0));
 		GridBagConstraints gbc_wIconAndTemp = new GridBagConstraints();
 		gbc_wIconAndTemp.gridx = 0;
-		gbc_wIconAndTemp.weighty = 0.85;
+		gbc_wIconAndTemp.weighty = 0.8;
 		gbc_wIconAndTemp.gridwidth = GridBagConstraints.REMAINDER;
 		gbc_weatherLabel.fill = GridBagConstraints.HORIZONTAL;
 		weatherPanel.add(wIconAndTemp, gbc_wIconAndTemp);
@@ -311,6 +318,16 @@ public class Main {
 		gbc_weatherOtherInfo.gridwidth = GridBagConstraints.REMAINDER;
 		gbc_weatherOtherInfo.fill = GridBagConstraints.HORIZONTAL;
 		weatherPanel.add(weatherOtherInfo, gbc_weatherOtherInfo);
+		
+		JLabel weatherPMGrade = new JLabel("초미세먼지 " + pm.getPM25Grade() + " / 미세먼지 " + pm.getPM10Grade());
+		weatherPMGrade.setFont(contentFont);
+		weatherPMGrade.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_weatherPMGrade = new GridBagConstraints();
+		gbc_weatherPMGrade.gridx = 0;
+		gbc_weatherPMGrade.weighty = 0.05;
+		gbc_weatherPMGrade.gridwidth = GridBagConstraints.REMAINDER;
+		gbc_weatherPMGrade.fill = GridBagConstraints.HORIZONTAL;
+		weatherPanel.add(weatherPMGrade, gbc_weatherPMGrade);
 		
 		JPanel weatherWebBtn = new JPanel();
 		weatherWebBtn.setLayout(new GridLayout(1, 2, 0, 0));

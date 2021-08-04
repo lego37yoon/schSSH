@@ -11,6 +11,10 @@ public class GetDate {
 		return todayDate;
 	}
 	
+	public String getTodayDateHReadable() {
+		return today.format(DateTimeFormatter.ofPattern("yyyy³â MM¿ù ddÀÏ"));
+	}
+	
 	public String getYesterdayDate() {
 		return today.minusDays(1).format(DateTimeFormatter.BASIC_ISO_DATE);
 	}
