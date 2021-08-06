@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JList;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JEditorPane;
@@ -78,8 +77,13 @@ public class Main {
 		gbc_noticeTab.fill = GridBagConstraints.BOTH;
 		noticePanel.add(noticeTab, gbc_noticeTab);
 		
+		//공지 탭 공통
+		GetNotice parser = new GetNotice();
+		
+		//학사일정
+		
 		JPanel scheduleOfUniv = new JPanel();
-		scheduleOfUniv.setLayout(new GridLayout(2, 0, 0, 0));
+		scheduleOfUniv.setLayout(new GridLayout(3, 0, 0, 0));
 		noticeTab.addTab("학사일정", null, scheduleOfUniv, null);
 		
 		GetDate gd = new GetDate();
@@ -89,12 +93,24 @@ public class Main {
 		beforeNoticeSchedule.setHorizontalAlignment(SwingConstants.CENTER);
 		scheduleOfUniv.add(beforeNoticeSchedule);
 		
-		JLabel scheduleList = new JLabel("<html><li> 16(월)~20(금) 2021학년도 2학기 수강신청(1차) </li><li> 16(월)~20(금) 2021학년도 2학기 휴?복학 신청 </li></html>");
+		String scheduleHTML = ""; //학사일정 담을 문자열
+		
+		for (String element : parser.getSchedule()) { //학사일정 항목 당 <br> 태그 적용
+			scheduleHTML += element + "<br>";
+		}
+		
+		JLabel scheduleList = new JLabel("<html><p style='text-align: center;'>" + scheduleHTML + "</p></html>");
 		scheduleList.setFont(contentFont);
-		scheduleList.setHorizontalAlignment(SwingConstants.LEFT);
+		scheduleList.setHorizontalAlignment(SwingConstants.CENTER);
 		scheduleOfUniv.add(scheduleList);
 		
-		GetNotice parser = new GetNotice();
+		JLabel seeMoreInfo = new JLabel("<html><p style='text-align: center;'>이후 일정은<br>더보기를 참조하세요</p></html>");
+		seeMoreInfo.setFont(contentFont);
+		seeMoreInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		scheduleOfUniv.add(seeMoreInfo);
+		
+		//공지사항 & 학사공지
+		
 		String[][] normalData = parser.getNormal();
 		String[][] schoolScheduleData = parser.getSchool();
 		
@@ -106,7 +122,9 @@ public class Main {
 		scheduleNoticeList.setFont(contentFont);
 		noticeTab.addTab("학사공지", null, scheduleNoticeList, null);
 		
-		JButton btnGoNotice = new JButton("\uBC14\uB85C\uAC00\uAE30");
+		//학사일정, 공지사항, 학사공지 밑 더보기 버튼
+		
+		JButton btnGoNotice = new JButton("더보기");
 		btnGoNotice.setFont(contentFont);
 		GridBagConstraints gbc_btnGoNotice = new GridBagConstraints();
 		gbc_btnGoNotice.gridx = 0;

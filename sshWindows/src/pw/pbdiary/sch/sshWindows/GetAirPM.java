@@ -17,8 +17,6 @@ public class GetAirPM {
 	static final String msrstnName = "µµ°í¸é";
 	
 	private JSONArray getData() throws MalformedURLException, IOException {
-		GetDate gd = new GetDate();
-		
 		URL url = new URL(host + "?serviceKey=" + URLEncoder.encode(apiKey, StandardCharsets.UTF_8) 
 				+ "&returnType=json&numOfRows=100&pageNo=1&stationName=" + URLEncoder.encode(msrstnName, StandardCharsets.UTF_8) 
 				+ "&dataTerm=DAILY&ver=1.0");

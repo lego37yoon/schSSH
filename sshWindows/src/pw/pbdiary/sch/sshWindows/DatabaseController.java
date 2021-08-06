@@ -3,8 +3,6 @@ package pw.pbdiary.sch.sshWindows;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.sqlite.*;
-
 public class DatabaseController {
 	
 	public int createNew(LocalDate day, String title, boolean done) { //할 일 생성 (알림 없음)

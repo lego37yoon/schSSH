@@ -12,7 +12,7 @@ public class GetDate {
 	}
 	
 	public String getTodayDateHReadable() {
-		return today.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+		return today.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 E요일"));
 	}
 	
 	public String getYesterdayDate() {
