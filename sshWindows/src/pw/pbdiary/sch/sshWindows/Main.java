@@ -3,6 +3,7 @@ package pw.pbdiary.sch.sshWindows;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -73,7 +74,7 @@ public class Main {
 		gbc_noticeTab.gridx = 0;
 		gbc_noticeTab.gridwidth = GridBagConstraints.REMAINDER;
 		gbc_noticeTab.gridy = 0;
-		gbc_noticeTab.weighty = 0.95;
+		gbc_noticeTab.weighty = 0.85;
 		gbc_noticeTab.fill = GridBagConstraints.BOTH;
 		noticePanel.add(noticeTab, gbc_noticeTab);
 		
@@ -83,6 +84,7 @@ public class Main {
 		//학사일정
 		
 		JPanel scheduleOfUniv = new JPanel();
+		scheduleOfUniv.setBackground(new Color(255, 255, 255));
 		scheduleOfUniv.setLayout(new GridLayout(3, 0, 0, 0));
 		noticeTab.addTab("학사일정", null, scheduleOfUniv, null);
 		
@@ -129,7 +131,7 @@ public class Main {
 		GridBagConstraints gbc_btnGoNotice = new GridBagConstraints();
 		gbc_btnGoNotice.gridx = 0;
 		gbc_btnGoNotice.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_btnGoNotice.weighty = 0.05;
+		gbc_btnGoNotice.weighty = 0.15;
 		gbc_btnGoNotice.fill = GridBagConstraints.HORIZONTAL;
 		noticePanel.add(btnGoNotice, gbc_btnGoNotice);
 		
@@ -304,6 +306,7 @@ public class Main {
 		
 		JPanel wIconAndTemp = new JPanel();
 		wIconAndTemp.setLayout(new GridLayout(1, 2, 0, 0));
+		wIconAndTemp.setBackground(new Color(255, 255, 255));
 		GridBagConstraints gbc_wIconAndTemp = new GridBagConstraints();
 		gbc_wIconAndTemp.gridx = 0;
 		gbc_wIconAndTemp.weighty = 0.8;
