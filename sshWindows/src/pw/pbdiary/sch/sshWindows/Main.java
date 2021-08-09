@@ -214,19 +214,19 @@ public class Main {
 		todoPanel.add(todoManagePanel, gbc_todoManagePanel);
 		todoManagePanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
-		JButton btnDoneDo = new JButton("\uC644\uB8CC");
-		btnDoneDo.setFont(contentFont);
-		todoManagePanel.add(btnDoneDo);
+		JButton btnAddDo = new JButton("추가");
+		btnAddDo.setFont(contentFont);
+		todoManagePanel.add(btnAddDo);
 		
-		JButton btnDeleteDo = new JButton("\uC0AD\uC81C");
+		JButton btnDeleteDo = new JButton("삭제");
 		btnDeleteDo.setFont(contentFont);
 		todoManagePanel.add(btnDeleteDo);
 		
-		JButton btnManageDo = new JButton("\uAD00\uB9AC");
+		JButton btnManageDo = new JButton("관리");
 		btnManageDo.setFont(contentFont);
 		todoManagePanel.add(btnManageDo);
 		
-		JButton btnSyncDo = new JButton("\uB3D9\uAE30\uD654");
+		JButton btnSyncDo = new JButton("동기화");
 		btnSyncDo.setFont(contentFont);
 		todoManagePanel.add(btnSyncDo);
 		
