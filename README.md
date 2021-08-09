@@ -1,12 +1,12 @@
 # schSSH
 SOONCHUNHYANG Student Helper - shows notice, time table, web mail for SCH Students and more.
 
- - Platform : Windows / Web (If available) / Android (If available)
+ - Platform : Windows
  - Language: Java
- - Required Library: Swing (for Windows), Jsoup (common), Spring (Web Framework)
- - Development Environment: Eclipse, Android Studio
+ - Required Library: Swing, Jsoup, JCEF, FlatLaf, Batik-Swing, org.json, SQLite-jdbc
+ - Development Environment: Eclipse
 
-Requires Java SE 16 to build Web Platform
+Requires Java SE 16 to build this program
 
 
 
