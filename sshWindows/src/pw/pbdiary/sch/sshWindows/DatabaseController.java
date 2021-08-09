@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -33,6 +34,21 @@ public class DatabaseController {
 				+ "VALUE TEXT NOT NULL);"); //설정값 내용
 		
 		return stm;
+	}
+	
+	public ResultSet getDo(LocalDate day) {
+		String date = "'" + day.toString() + "'";
+		Statement stm;
+		ResultSet rs = null;
+		try {
+			stm = initDatabase();
+			rs = stm.executeQuery("SELECT ID, TITLE, DONE FROM TODO WHERE DATE=" + date + ";");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("쿼리를 얻어오지 못했습니다.");
+		}
+		
+		return rs;
 	}
 	
 	public boolean createNewDo(LocalDate day, String title, boolean done) { //할 일 생성 (알림 없음)
@@ -138,8 +154,12 @@ public class DatabaseController {
 	
 	public int editDo(int id, boolean done) { //완료 여부 변경
 		try {
-			initDatabase();
-
+			Statement stm = initDatabase();
+			if (done == true) {
+				stm.executeUpdate("UPDATE TODO SET DONE=0 WHERE ID=" + id + ";");
+			} else {
+				stm.executeUpdate("UPDATE TODO SET DONE=1 WHERE ID=" + id + ";");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("데이터베이스 연결에 실패하였습니다.");
@@ -150,7 +170,7 @@ public class DatabaseController {
 	
 	public boolean saveMemo(String memo) { //간단 메모 저장
 		try {
-			initDatabase();
+			Statement stm = initDatabase();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
