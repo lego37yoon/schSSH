@@ -26,13 +26,15 @@ public class DatabaseController {
 				+ "ALARM TEXT," //알림 설정
 				+ "DONE INTEGER NOT NULL);"); //완료 여부
 		stm.executeUpdate("CREATE TABLE IF NOT EXISTS MEMO (" //간단 메모
-				+ "ID INTEGER NOT NULL AUTOINCREMENT," //메모 ID - PRIMARY KEY, 자동 증가 옵션이 존재하나, 메모는 오직 하나만 존재
-				+ "MEMO TEXT NOT NULL)"); //메모 내부 텍스트
+				+ "ID INTEGER NOT NULL PRIMARY KEY," //메모 ID - PRIMARY KEY, 자동 증가 옵션이 존재하나, 메모는 오직 하나만 존재
+				+ "MEMO TEXT)"); //메모 내부 텍스트
+		
+		stm.executeUpdate("INSERT OR IGNORE INTO MEMO (ID, MEMO) VALUES(1, '<html></html>');");
+		
 		stm.executeUpdate("CREATE TABLE IF NOT EXISTS SETTINGS (" //설정
 				+ "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," //설정값 ID
 				+ "TYPE TEXT NOT NULL," //설정값 이름
 				+ "VALUE TEXT NOT NULL);"); //설정값 내용
-		
 		return stm;
 	}
 	
@@ -45,10 +47,33 @@ public class DatabaseController {
 			rs = stm.executeQuery("SELECT ID, TITLE, DONE FROM TODO WHERE DATE=" + date + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("쿼리를 얻어오지 못했습니다.");
+			System.out.println("할 일를 얻어오지 못했습니다.");
 		}
 		
 		return rs;
+	}
+	
+	public String getMemo() {
+		Statement stm = null;
+		ResultSet rs = null;
+		try {
+			stm = initDatabase();
+			rs = stm.executeQuery("SELECT MEMO FROM MEMO WHERE ID=1;");
+			if (rs != null) {
+				return rs.getString("MEMO");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("메모를 불러오지 못했습니다.");
+		} finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "<html></html>";
 	}
 	
 	public boolean createNewDo(LocalDate day, String title, boolean done) { //할 일 생성 (알림 없음)
@@ -79,7 +104,7 @@ public class DatabaseController {
 			stm.executeUpdate("INSERT INTO TODO (DATE, TITLE, ALARM, DONE) VALUES (" + date + titleSQL + alarmSQL + done +");"); //할 일 추가
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 			return false;
 		}
 		
@@ -92,7 +117,7 @@ public class DatabaseController {
 			stm.executeUpdate("DELETE FROM TODO WHERE ID=" + id + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 			return false;
 		}
 
@@ -107,7 +132,7 @@ public class DatabaseController {
 			stm.executeUpdate("UPDATE TODO SET DATE=" + date + " WHERE ID=" + id + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 		}
 		
 		return id;
@@ -121,7 +146,7 @@ public class DatabaseController {
 			stm.executeUpdate("UPDATE TODO SET ALARM=" + alarmSQL + " WHERE ID=" + id + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 		}
 		
 		return id;
@@ -133,7 +158,7 @@ public class DatabaseController {
 			stm.executeUpdate("UPDATE TODO SET ALARM=NULL WHERE ID=" + id + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 		}
 		
 		return id;
@@ -146,7 +171,7 @@ public class DatabaseController {
 			stm.executeUpdate("UPDATE TODO SET TITLE=" + titleSQL + " WHERE ID=" + id +";");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 		}
 		
 		return id;
@@ -162,19 +187,22 @@ public class DatabaseController {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 		}
 		
 		return id;
 	}
 	
 	public boolean saveMemo(String memo) { //간단 메모 저장
+		String memoString = "'" + memo + "'";
+		
+		//UPSET 문법 - SQLite 3.24.0부터 지원
 		try {
 			Statement stm = initDatabase();
-
+			stm.executeUpdate("INSERT INTO MEMO (ID, MEMO) VALUES(1, " + memoString + ") ON CONFLICT(ID) DO UPDATE SET MEMO=excluded.MEMO;");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 		}
 		
 		return true;
@@ -182,11 +210,11 @@ public class DatabaseController {
 	
 	public boolean deleteMemo() { //간단 메모 삭제
 		try {
-			initDatabase();
-
+			Statement stm = initDatabase();
+			stm.executeUpdate("INSERT INTO MEMO (ID, MEMO) VALUES(1, NULL) ON CONFLICT(ID) DO UPDATE SET MEMO=excluded.MEMO;");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("데이터베이스 연결에 실패하였습니다.");
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
 		}
 		
 		return true;

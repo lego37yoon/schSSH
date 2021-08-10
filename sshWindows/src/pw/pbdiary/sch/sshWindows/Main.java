@@ -3,6 +3,9 @@ package pw.pbdiary.sch.sshWindows;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
@@ -15,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JEditorPane;
+import javax.swing.JScrollPane;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -47,17 +52,26 @@ public class Main {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		//DB 사용 영역 공통 (수업 시간표, 할 일, 메모, 웹 메일, 종합정보시스템, 포털)
+		DatabaseController dbController = new DatabaseController();
+		//공지 탭 공통
+		GetNotice parser = new GetNotice();
+		//시간 받아오기
+		GetDate gd = new GetDate();
+		//UI 설정
 		FlatLightLaf.setup();
+		//글꼴 설정
+		Font celciusFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 24);
+		Font titleFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 18);
+		Font contentFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 14);
+		
 		
 		frame = new JFrame();
 		frame.setTitle("schSSH");
 		frame.setSize(900, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(2, 3, 5, 5));
-		
-		Font celciusFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 24);
-		Font titleFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 18);
-		Font contentFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 14);
 		
 		JPanel noticePanel = new JPanel();
 		frame.getContentPane().add(noticePanel);
@@ -78,17 +92,12 @@ public class Main {
 		gbc_noticeTab.fill = GridBagConstraints.BOTH;
 		noticePanel.add(noticeTab, gbc_noticeTab);
 		
-		//공지 탭 공통
-		GetNotice parser = new GetNotice();
-		
 		//학사일정
 		
 		JPanel scheduleOfUniv = new JPanel();
 		scheduleOfUniv.setBackground(new Color(255, 255, 255));
 		scheduleOfUniv.setLayout(new GridLayout(3, 0, 0, 0));
 		noticeTab.addTab("학사일정", null, scheduleOfUniv, null);
-		
-		GetDate gd = new GetDate();
 		
 		JLabel beforeNoticeSchedule = new JLabel(gd.getTodayDateHReadable());
 		beforeNoticeSchedule.setFont(titleFont);
@@ -177,6 +186,7 @@ public class Main {
 		timeTablePanel.add(btnSyncTimeTable, gbc_btnSyncTimeTable);
 		
 		//오늘의 할 일
+		
 		JPanel todoPanel = new JPanel();
 		frame.getContentPane().add(todoPanel);
 		GridBagLayout gbl_todoPanel = new GridBagLayout();
@@ -196,14 +206,41 @@ public class Main {
 		gbc_todoLabel.fill = GridBagConstraints.HORIZONTAL;
 		todoPanel.add(todoLabel, gbc_todoLabel);
 		
-		JList todoList = new JList();
+		ResultSet todoListQuery = dbController.getDo(gd.getTodayByLocalDate());
+		ArrayList<Boolean> todoIfDone = new ArrayList<Boolean>();
+		ArrayList<String> todoTitle = new ArrayList<String>();
+		try {
+			while (todoListQuery.next()) {
+				todoTitle.add(todoListQuery.getString("TITLE"));
+				if (todoListQuery.getInt("DONE") == 1) {
+					todoIfDone.add(true);
+				} else {
+					todoIfDone.add(false);
+				}
+			}
+			
+			todoListQuery.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//오류 창 띄우기
+			System.out.println("할 일 데이터를 불러오지 못했습니다.");
+		}
+		
+		DefaultListModel<String> todoListModel = new DefaultListModel<String>();
+		for (String element : todoTitle) {
+			todoListModel.addElement(element);
+		}
+		
+		JList<String> todoList = new JList<String>(todoListModel);
 		todoList.setFont(contentFont);
-		GridBagConstraints gbc_todoList = new GridBagConstraints();
-		gbc_todoList.gridx = 0;
-		gbc_todoList.weighty = 0.9;
-		gbc_todoList.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_todoList.fill = GridBagConstraints.BOTH;
-		todoPanel.add(todoList, gbc_todoList);
+		todoList.setCellRenderer(new CheckboxListCellRenderer());
+		JScrollPane todoListPane = new JScrollPane(todoList);
+		GridBagConstraints gbc_todoListPane = new GridBagConstraints();
+		gbc_todoListPane.gridx = 0;
+		gbc_todoListPane.weighty = 0.9;
+		gbc_todoListPane.gridwidth = GridBagConstraints.REMAINDER;
+		gbc_todoListPane.fill = GridBagConstraints.BOTH;
+		todoPanel.add(todoListPane, gbc_todoListPane);
 		
 		JPanel todoManagePanel = new JPanel();
 		GridBagConstraints gbc_todoManagePanel = new GridBagConstraints();
@@ -252,6 +289,8 @@ public class Main {
 		
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setFont(contentFont);
+		editorPane.setContentType("text/html");
+		editorPane.setText(dbController.getMemo());
 		GridBagConstraints gbc_editorPane = new GridBagConstraints();
 		gbc_editorPane.gridx = 0;
 		gbc_editorPane.gridwidth = GridBagConstraints.REMAINDER;

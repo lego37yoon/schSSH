@@ -1,10 +1,24 @@
 package pw.pbdiary.sch.sshWindows;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class GetDate {
 	private LocalDateTime today = LocalDateTime.now();
+	
+	public LocalDateTime getTodayByLocalDateTime() {
+		return today;
+	}
+	
+	public LocalDate getTodayByLocalDate() {
+		return today.toLocalDate();
+	}
+	
+	public LocalTime getNowByLocalTime() {
+		return today.toLocalTime();
+	}
 	
 	public String getTodayDate() {
 		String todayDate = today.format(DateTimeFormatter.BASIC_ISO_DATE);
