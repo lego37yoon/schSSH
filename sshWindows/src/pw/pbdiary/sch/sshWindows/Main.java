@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
 import javax.swing.JFrame;
@@ -48,9 +47,7 @@ public class Main {
 		initialize();
 	}
 
-	/*
-	 * Initialize the contents of the frame.
-	 */
+	// Initialize the contents of the frame.
 	private void initialize() {
 		
 		//DB 사용 영역 공통 (수업 시간표, 할 일, 메모, 웹 메일, 종합정보시스템, 포털)
@@ -75,11 +72,7 @@ public class Main {
 		
 		JPanel noticePanel = new JPanel();
 		frame.getContentPane().add(noticePanel);
-		GridBagLayout gbl_noticePanel = new GridBagLayout();
-		gbl_noticePanel.columnWidths = new int[]{240, 0};
-		gbl_noticePanel.rowHeights = new int[]{25, 0, 0};
-		gbl_noticePanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_noticePanel.rowWeights = new double[]{0.0, Double.MIN_VALUE, 0.0};
+		CustomGridBagLayout gbl_noticePanel = new CustomGridBagLayout();
 		noticePanel.setLayout(gbl_noticePanel);
 		
 		JTabbedPane noticeTab = new JTabbedPane(JTabbedPane.TOP);
@@ -148,22 +141,13 @@ public class Main {
 		
 		JPanel timeTablePanel = new JPanel();
 		frame.getContentPane().add(timeTablePanel);
-		GridBagLayout gbl_timeTablePanel = new GridBagLayout();
-		gbl_timeTablePanel.columnWidths = new int[]{240, 0};
-		gbl_timeTablePanel.rowHeights = new int[]{25, 0, 0};
-		gbl_timeTablePanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_timeTablePanel.rowWeights = new double[]{0.0, Double.MIN_VALUE, 0.0};
+		CustomGridBagLayout gbl_timeTablePanel = new CustomGridBagLayout();
 		timeTablePanel.setLayout(gbl_timeTablePanel);
 		
 
 		JLabel timeTableLabel = new JLabel("\uC218\uC5C5 \uC2DC\uAC04\uD45C");
 		timeTableLabel.setFont(titleFont);
-		GridBagConstraints gbc_timeTableLabel = new GridBagConstraints();
-		gbc_timeTableLabel.gridx = 0;
-		gbc_timeTableLabel.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_timeTableLabel.gridy = 0;
-		gbc_timeTableLabel.weighty = 0.05;
-		gbc_timeTableLabel.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_timeTableLabel = new CustomGridBagConstraints("title");
 		timeTablePanel.add(timeTableLabel, gbc_timeTableLabel);
 		
 		timeTable = new JTable();
@@ -175,35 +159,22 @@ public class Main {
 		gbc_timeTable.fill = GridBagConstraints.BOTH;
 		timeTablePanel.add(timeTable, gbc_timeTable);
 		
-		JButton btnSyncTimeTable = new JButton("\uC0C8\uB85C\uACE0\uCE68");
+		JButton btnSyncTimeTable = new JButton("새로고침");
 		btnSyncTimeTable.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnSyncTimeTable.setFont(contentFont);
-		GridBagConstraints gbc_btnSyncTimeTable = new GridBagConstraints();
-		gbc_btnSyncTimeTable.gridx = 0;
-		gbc_btnSyncTimeTable.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_btnSyncTimeTable.weighty = 0.05;
-		gbc_btnSyncTimeTable.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_btnSyncTimeTable = new CustomGridBagConstraints("menu");
 		timeTablePanel.add(btnSyncTimeTable, gbc_btnSyncTimeTable);
 		
 		//오늘의 할 일
 		
 		JPanel todoPanel = new JPanel();
 		frame.getContentPane().add(todoPanel);
-		GridBagLayout gbl_todoPanel = new GridBagLayout();
-		gbl_todoPanel.columnWidths = new int[]{240, 0};
-		gbl_todoPanel.rowHeights = new int[]{25, 0, 0};
-		gbl_todoPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_todoPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE, 0.0};
+		CustomGridBagLayout gbl_todoPanel = new CustomGridBagLayout();
 		todoPanel.setLayout(gbl_todoPanel);
 		
 		JLabel todoLabel = new JLabel("\uC624\uB298\uC758 \uD560 \uC77C");
 		todoLabel.setFont(titleFont);
-		GridBagConstraints gbc_todoLabel = new GridBagConstraints();
-		gbc_todoLabel.gridx = 0;
-		gbc_todoLabel.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_todoLabel.gridy = 0;
-		gbc_todoLabel.weighty = 0.05;
-		gbc_todoLabel.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_todoLabel = new CustomGridBagConstraints("title");
 		todoPanel.add(todoLabel, gbc_todoLabel);
 		
 		ResultSet todoListQuery = dbController.getDo(gd.getTodayByLocalDate());
@@ -235,19 +206,11 @@ public class Main {
 		todoList.setFont(contentFont);
 		todoList.setCellRenderer(new CheckboxListCellRenderer());
 		JScrollPane todoListPane = new JScrollPane(todoList);
-		GridBagConstraints gbc_todoListPane = new GridBagConstraints();
-		gbc_todoListPane.gridx = 0;
-		gbc_todoListPane.weighty = 0.9;
-		gbc_todoListPane.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_todoListPane.fill = GridBagConstraints.BOTH;
+		CustomGridBagConstraints gbc_todoListPane = new CustomGridBagConstraints("content");
 		todoPanel.add(todoListPane, gbc_todoListPane);
 		
 		JPanel todoManagePanel = new JPanel();
-		GridBagConstraints gbc_todoManagePanel = new GridBagConstraints();
-		gbc_todoManagePanel.gridx = 0;
-		gbc_todoManagePanel.weighty = 0.05;
-		gbc_todoManagePanel.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_todoManagePanel.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_todoManagePanel = new CustomGridBagConstraints("menu");
 		todoPanel.add(todoManagePanel, gbc_todoManagePanel);
 		todoManagePanel.setLayout(new GridLayout(0, 4, 0, 0));
 		
@@ -270,32 +233,19 @@ public class Main {
 		// 간단 메모
 		JPanel editorPanel = new JPanel();
 		frame.getContentPane().add(editorPanel);
-		GridBagLayout gbl_editorPanel = new GridBagLayout();
-		gbl_editorPanel.columnWidths = new int[]{240, 0};
-		gbl_editorPanel.rowHeights = new int[]{25, 0, 0};
-		gbl_editorPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_editorPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE, 0.0};
+		CustomGridBagLayout gbl_editorPanel = new CustomGridBagLayout();
 		editorPanel.setLayout(gbl_editorPanel);
 		
 		JLabel editorLabel = new JLabel("\uAC04\uB2E8 \uBA54\uBAA8");
 		editorLabel.setFont(titleFont);
-		GridBagConstraints gbc_editorLabel = new GridBagConstraints();
-		gbc_editorLabel.gridx = 0;
-		gbc_editorLabel.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_editorLabel.gridy = 0;
-		gbc_editorLabel.weighty = 0.05;
-		gbc_editorLabel.fill = GridBagConstraints.BOTH;
+		CustomGridBagConstraints gbc_editorLabel = new CustomGridBagConstraints("title");
 		editorPanel.add(editorLabel, gbc_editorLabel);
 		
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setFont(contentFont);
 		editorPane.setContentType("text/html");
 		editorPane.setText(dbController.getMemo());
-		GridBagConstraints gbc_editorPane = new GridBagConstraints();
-		gbc_editorPane.gridx = 0;
-		gbc_editorPane.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_editorPane.weighty = 0.9;
-		gbc_editorPane.fill = GridBagConstraints.BOTH;
+		CustomGridBagConstraints gbc_editorPane = new CustomGridBagConstraints("content");
 		editorPanel.add(editorPane, gbc_editorPane);
 		
 		JPanel editorManagePanel = new JPanel();
@@ -322,21 +272,12 @@ public class Main {
 		//날씨
 		JPanel weatherPanel = new JPanel();
 		frame.getContentPane().add(weatherPanel);
-		GridBagLayout gbl_weatherPanel = new GridBagLayout();
-		gbl_weatherPanel.columnWidths = new int[]{240, 0};
-		gbl_weatherPanel.rowHeights = new int[]{25, 0, 0};
-		gbl_weatherPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_weatherPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE, 0.0};
+		CustomGridBagLayout gbl_weatherPanel = new CustomGridBagLayout();
 		weatherPanel.setLayout(gbl_weatherPanel);
 		
 		JLabel weatherLabel = new JLabel("\uB0A0\uC528");
 		weatherLabel.setFont(titleFont);
-		GridBagConstraints gbc_weatherLabel = new GridBagConstraints();
-		gbc_weatherLabel.gridx = 0;
-		gbc_weatherLabel.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_weatherLabel.gridy = 0;
-		gbc_weatherLabel.weighty = 0.05;
-		gbc_weatherLabel.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_weatherLabel = new CustomGridBagConstraints("title");
 		weatherPanel.add(weatherLabel, gbc_weatherLabel);
 		
 		//날씨 정보 얻기
@@ -391,11 +332,7 @@ public class Main {
 		
 		JPanel weatherWebBtn = new JPanel();
 		weatherWebBtn.setLayout(new GridLayout(1, 2, 0, 0));
-		GridBagConstraints gbc_weatherWebBtn = new GridBagConstraints();
-		gbc_weatherWebBtn.gridx = 0;
-		gbc_weatherWebBtn.weighty = 0.05;
-		gbc_weatherWebBtn.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_weatherWebBtn.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_weatherWebBtn = new CustomGridBagConstraints("menu");
 		weatherPanel.add(weatherWebBtn, gbc_weatherWebBtn);
 		
 		JButton kmaGo = new JButton("기상청");
