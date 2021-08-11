@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagConstraints;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -59,7 +58,7 @@ public class Main {
 		//UI 설정
 		FlatLightLaf.setup();
 		//글꼴 설정
-		Font celciusFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 24);
+		Font celciusFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 28);
 		Font titleFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 18);
 		Font contentFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 14);
 		
@@ -77,12 +76,7 @@ public class Main {
 		
 		JTabbedPane noticeTab = new JTabbedPane(JTabbedPane.TOP);
 		noticeTab.setFont(titleFont);
-		GridBagConstraints gbc_noticeTab = new GridBagConstraints();
-		gbc_noticeTab.gridx = 0;
-		gbc_noticeTab.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_noticeTab.gridy = 0;
-		gbc_noticeTab.weighty = 0.85;
-		gbc_noticeTab.fill = GridBagConstraints.BOTH;
+		CustomGridBagConstraints gbc_noticeTab = new CustomGridBagConstraints("both", 0.85);
 		noticePanel.add(noticeTab, gbc_noticeTab);
 		
 		//학사일정
@@ -130,11 +124,7 @@ public class Main {
 		
 		JButton btnGoNotice = new JButton("더보기");
 		btnGoNotice.setFont(contentFont);
-		GridBagConstraints gbc_btnGoNotice = new GridBagConstraints();
-		gbc_btnGoNotice.gridx = 0;
-		gbc_btnGoNotice.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_btnGoNotice.weighty = 0.15;
-		gbc_btnGoNotice.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_btnGoNotice = new CustomGridBagConstraints("horizontal", 0.15);
 		noticePanel.add(btnGoNotice, gbc_btnGoNotice);
 		
 		// 수업 시간표
@@ -152,11 +142,7 @@ public class Main {
 		
 		timeTable = new JTable();
 		timeTable.setFont(contentFont);
-		GridBagConstraints gbc_timeTable = new GridBagConstraints();
-		gbc_timeTable.gridx = 0;
-		gbc_timeTable.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_timeTable.weighty = 0.9;
-		gbc_timeTable.fill = GridBagConstraints.BOTH;
+		CustomGridBagConstraints gbc_timeTable = new CustomGridBagConstraints("both", 0.9);
 		timeTablePanel.add(timeTable, gbc_timeTable);
 		
 		JButton btnSyncTimeTable = new JButton("새로고침");
@@ -249,11 +235,7 @@ public class Main {
 		editorPanel.add(editorPane, gbc_editorPane);
 		
 		JPanel editorManagePanel = new JPanel();
-		GridBagConstraints gbc_editorManagePanel = new GridBagConstraints();
-		gbc_editorManagePanel.gridx = 0;
-		gbc_editorManagePanel.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_editorManagePanel.weighty = 0.05;
-		gbc_editorManagePanel.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_editorManagePanel = new CustomGridBagConstraints("menu");
 		editorPanel.add(editorManagePanel, gbc_editorManagePanel);
 		editorManagePanel.setLayout(new GridLayout(1, 3, 0, 0));
 		
@@ -287,11 +269,7 @@ public class Main {
 		JPanel wIconAndTemp = new JPanel();
 		wIconAndTemp.setLayout(new GridLayout(1, 2, 0, 0));
 		wIconAndTemp.setBackground(new Color(255, 255, 255));
-		GridBagConstraints gbc_wIconAndTemp = new GridBagConstraints();
-		gbc_wIconAndTemp.gridx = 0;
-		gbc_wIconAndTemp.weighty = 0.8;
-		gbc_wIconAndTemp.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_weatherLabel.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_wIconAndTemp = new CustomGridBagConstraints("horizontal", 0.8);
 		weatherPanel.add(wIconAndTemp, gbc_wIconAndTemp);
 		
 		JSVGCanvas weatherIcon = new JSVGCanvas();
@@ -313,21 +291,13 @@ public class Main {
 		JLabel weatherOtherInfo = new JLabel("습도 " + gw.getHumidity() + "/ PM 2.5 " + pm.getPM25() + "/ PM 10 " + pm.getPM10());
 		weatherOtherInfo.setFont(contentFont);
 		weatherOtherInfo.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_weatherOtherInfo = new GridBagConstraints();
-		gbc_weatherOtherInfo.gridx = 0;
-		gbc_weatherOtherInfo.weighty = 0.05;
-		gbc_weatherOtherInfo.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_weatherOtherInfo.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_weatherOtherInfo = new CustomGridBagConstraints("subcontent");
 		weatherPanel.add(weatherOtherInfo, gbc_weatherOtherInfo);
 		
 		JLabel weatherPMGrade = new JLabel("초미세먼지 " + pm.getPM25Grade() + " / 미세먼지 " + pm.getPM10Grade());
 		weatherPMGrade.setFont(contentFont);
 		weatherPMGrade.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_weatherPMGrade = new GridBagConstraints();
-		gbc_weatherPMGrade.gridx = 0;
-		gbc_weatherPMGrade.weighty = 0.05;
-		gbc_weatherPMGrade.gridwidth = GridBagConstraints.REMAINDER;
-		gbc_weatherPMGrade.fill = GridBagConstraints.HORIZONTAL;
+		CustomGridBagConstraints gbc_weatherPMGrade = new CustomGridBagConstraints("subcontent");
 		weatherPanel.add(weatherPMGrade, gbc_weatherPMGrade);
 		
 		JPanel weatherWebBtn = new JPanel();

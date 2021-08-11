@@ -20,10 +20,27 @@ public class CustomGridBagConstraints extends GridBagConstraints{
 				weighty = 0.9;
 				fill = GridBagConstraints.BOTH;
 			}
-			case "menu" -> {
+			case "menu", "subcontent" -> {
 				gridx = 0;
 				gridwidth = GridBagConstraints.REMAINDER;
 				weighty = 0.05;
+				fill = GridBagConstraints.HORIZONTAL;
+			}
+		}
+	}
+	
+	CustomGridBagConstraints(String type, double weighty) {
+		switch (type) {
+			case "both" -> {
+				gridx = 0;
+				gridwidth = GridBagConstraints.REMAINDER;
+				this.weighty = weighty;
+				fill = GridBagConstraints.BOTH;
+			}
+			case "horizontal" -> {
+				gridx = 0;
+				gridwidth = GridBagConstraints.REMAINDER;
+				this.weighty = weighty;
 				fill = GridBagConstraints.HORIZONTAL;
 			}
 		}
