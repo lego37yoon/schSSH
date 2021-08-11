@@ -29,7 +29,6 @@ public class GetWeather {
 		connection.setRequestProperty("Content-type", "application/json");
 			
 		String weatherData = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);	
-		
 		JSONObject fullObjectedData = new JSONObject(weatherData);
 		
 		JSONArray currentData = fullObjectedData.getJSONObject("response")
