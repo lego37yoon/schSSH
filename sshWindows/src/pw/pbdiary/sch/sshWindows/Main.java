@@ -19,6 +19,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -164,15 +165,13 @@ public class Main {
 		todoPanel.add(todoLabel, gbc_todoLabel);
 		
 		ResultSet todoListQuery = dbController.getDo(gd.getTodayByLocalDate());
-		ArrayList<Boolean> todoIfDone = new ArrayList<Boolean>();
-		ArrayList<String> todoTitle = new ArrayList<String>();
+		ArrayList<JCheckBox> todoArrayList = new ArrayList<JCheckBox>();
 		try {
 			while (todoListQuery.next()) {
-				todoTitle.add(todoListQuery.getString("TITLE"));
 				if (todoListQuery.getInt("DONE") == 1) {
-					todoIfDone.add(true);
+					todoArrayList.add(new JCheckBox(todoListQuery.getString("TITLE"), true));
 				} else {
-					todoIfDone.add(false);
+					todoArrayList.add(new JCheckBox(todoListQuery.getString("TITLE"), false));
 				}
 			}
 			
@@ -183,14 +182,16 @@ public class Main {
 			System.out.println("할 일 데이터를 불러오지 못했습니다.");
 		}
 		
-		DefaultListModel<String> todoListModel = new DefaultListModel<String>();
-		for (String element : todoTitle) {
+		DefaultListModel<JCheckBox> todoListModel = new DefaultListModel<JCheckBox>();
+		for (JCheckBox element : todoArrayList) {
 			todoListModel.addElement(element);
 		}
 		
-		JList<String> todoList = new JList<String>(todoListModel);
+		JList<JCheckBox> todoList = new JList<JCheckBox>(todoListModel);
 		todoList.setFont(contentFont);
-		todoList.setCellRenderer(new CheckboxListCellRenderer());
+//		todoList.setCellRenderer(new CheckboxListCellRenderer());
+//		JCheckboxList todoList = new JCheckboxList(todoIfDone, todoListModel);
+		todoList.setFont(contentFont);
 		JScrollPane todoListPane = new JScrollPane(todoList);
 		CustomGridBagConstraints gbc_todoListPane = new CustomGridBagConstraints("content");
 		todoPanel.add(todoListPane, gbc_todoListPane);
