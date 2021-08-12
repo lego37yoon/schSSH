@@ -6,12 +6,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-public class CheckboxListCellRenderer extends JCheckBox implements ListCellRenderer<Object> {
+public class CheckboxListCellRenderer extends JCheckBox implements ListCellRenderer<JCheckBox> {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+	public Component getListCellRendererComponent(JList<? extends JCheckBox> list, JCheckBox value, int index, boolean isSelected,
 			boolean cellHasFocus) {
 		setComponentOrientation(list.getComponentOrientation());
 		setFont(list.getFont());
@@ -20,7 +19,8 @@ public class CheckboxListCellRenderer extends JCheckBox implements ListCellRende
 		setSelected(isSelected);
 		setEnabled(list.isEnabled());
 		
-		setText(value == null ? "" : value.toString());
+		setText(value == null ? "" : value.getText());
+		setSelected(value.isSelected());
 		
 		return this;
 	}

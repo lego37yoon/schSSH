@@ -187,10 +187,7 @@ public class Main {
 			todoListModel.addElement(element);
 		}
 		
-		JList<JCheckBox> todoList = new JList<JCheckBox>(todoListModel);
-		todoList.setFont(contentFont);
-//		todoList.setCellRenderer(new CheckboxListCellRenderer());
-//		JCheckboxList todoList = new JCheckboxList(todoIfDone, todoListModel);
+		JCheckboxList todoList = new JCheckboxList(todoListModel);
 		todoList.setFont(contentFont);
 		JScrollPane todoListPane = new JScrollPane(todoList);
 		CustomGridBagConstraints gbc_todoListPane = new CustomGridBagConstraints("content");
