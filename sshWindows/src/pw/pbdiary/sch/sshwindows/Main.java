@@ -3,44 +3,21 @@ package pw.pbdiary.sch.sshwindows;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.awt.Color;
-import java.awt.Component;
 
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.JPanel;
-import javax.swing.JEditorPane;
-import javax.swing.JScrollPane;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
 import pw.pbdiary.sch.sshwindows.func.DatabaseController;
-import pw.pbdiary.sch.sshwindows.func.GetAirPM;
 import pw.pbdiary.sch.sshwindows.func.GetDate;
 import pw.pbdiary.sch.sshwindows.func.GetNotice;
-import pw.pbdiary.sch.sshwindows.func.GetWeather;
-import pw.pbdiary.sch.sshwindows.panel.CustomGridBagConstraints;
-import pw.pbdiary.sch.sshwindows.panel.CustomGridBagLayout;
-import pw.pbdiary.sch.sshwindows.panel.JCheckboxList;
 import pw.pbdiary.sch.sshwindows.panel.MemoPanel;
 import pw.pbdiary.sch.sshwindows.panel.MenuPanel;
 import pw.pbdiary.sch.sshwindows.panel.NoticePanel;
 import pw.pbdiary.sch.sshwindows.panel.TimeTablePanel;
 import pw.pbdiary.sch.sshwindows.panel.ToDoPanel;
 import pw.pbdiary.sch.sshwindows.panel.WeatherPanel;
-
-import org.apache.batik.swing.JSVGCanvas;
-
 
 public class Main {
 
@@ -114,5 +91,4 @@ public class Main {
 		
 		frame.setVisible(true);
 	}
-
 }
