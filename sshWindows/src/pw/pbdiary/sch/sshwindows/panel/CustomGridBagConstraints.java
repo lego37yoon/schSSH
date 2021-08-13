@@ -1,11 +1,11 @@
-package pw.pbdiary.sch.sshWindows;
+package pw.pbdiary.sch.sshwindows.panel;
 
 import java.awt.GridBagConstraints;
 
 public class CustomGridBagConstraints extends GridBagConstraints{
 	private static final long serialVersionUID = 1L;
 
-	CustomGridBagConstraints(String type) {
+	public CustomGridBagConstraints(String type) {
 		switch (type) {
 			case  "title" -> {
 				gridx = 0;
@@ -29,7 +29,7 @@ public class CustomGridBagConstraints extends GridBagConstraints{
 		}
 	}
 	
-	CustomGridBagConstraints(String type, double weighty) {
+	public CustomGridBagConstraints(String type, double weighty) {
 		switch (type) {
 			case "both" -> {
 				gridx = 0;

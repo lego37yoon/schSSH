@@ -1,4 +1,4 @@
-package pw.pbdiary.sch.sshWindows;
+package pw.pbdiary.sch.sshwindows.panel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

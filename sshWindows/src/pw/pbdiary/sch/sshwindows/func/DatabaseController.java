@@ -1,4 +1,4 @@
-package pw.pbdiary.sch.sshWindows;
+package pw.pbdiary.sch.sshwindows.func;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

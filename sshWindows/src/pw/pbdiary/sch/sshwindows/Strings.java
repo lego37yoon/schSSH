@@ -1,4 +1,4 @@
-package pw.pbdiary.sch.sshWindows;
+package pw.pbdiary.sch.sshwindows;
 
 import java.beans.Beans;
 import java.util.MissingResourceException;
