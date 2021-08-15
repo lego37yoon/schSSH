@@ -7,13 +7,18 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import pw.pbdiary.sch.sshwindows.func.LoginToSchool;
+
 public class MenuPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public MenuPanel(Font titleFont, Font contentFont) {
 		this.setLayout(new GridLayout(4, 1, 0, 0));
 		
-		JButton btnWebMail = new JButton("\uC6F9 \uBA54\uC77C 0\uAC74");
+		LoginToSchool lts = new LoginToSchool();
+		lts.loginViaAuth();
+		
+		JButton btnWebMail = new JButton("\uC6F9 \uBA54\uC77C NaN\uAC74");
 		btnWebMail.setFont(titleFont);
 		btnWebMail.setHorizontalAlignment(SwingConstants.LEFT);
 		this.add(btnWebMail);

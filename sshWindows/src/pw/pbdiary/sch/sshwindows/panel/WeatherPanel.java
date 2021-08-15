@@ -3,6 +3,8 @@ package pw.pbdiary.sch.sshwindows.panel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -11,13 +13,16 @@ import javax.swing.SwingConstants;
 
 import org.apache.batik.swing.JSVGCanvas;
 
+import pw.pbdiary.sch.sshwindows.func.BrowserFrame;
 import pw.pbdiary.sch.sshwindows.func.GetAirPM;
 import pw.pbdiary.sch.sshwindows.func.GetWeather;
 
 public class WeatherPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private static BrowserFrame bf;
 
-	public WeatherPanel(Font titleFont, Font celciusFont, Font contentFont) {
+	public WeatherPanel(Font titleFont, Font celciusFont, Font contentFont, BrowserFrame bf) {
+		WeatherPanel.bf = bf;
 		CustomGridBagLayout gbl_weatherPanel = new CustomGridBagLayout();
 		this.setLayout(gbl_weatherPanel);
 		
@@ -71,10 +76,26 @@ public class WeatherPanel extends JPanel {
 		
 		JButton kmaGo = new JButton("기상청");
 		kmaGo.setFont(contentFont);
+		kmaGo.addMouseListener(new BtnMouseEventListener(0));
 		weatherWebBtn.add(kmaGo);
 		
 		JButton airKoreaGo = new JButton("에어코리아");
 		airKoreaGo.setFont(contentFont);
+		airKoreaGo.addMouseListener(new BtnMouseEventListener(1));
 		weatherWebBtn.add(airKoreaGo);
+	}
+
+	private class BtnMouseEventListener extends MouseAdapter {
+		private int type = 0;
+		public BtnMouseEventListener(int type) {
+			this.type = type;
+		}
+		
+		public void mouseClicked(MouseEvent e) {
+			switch(type) {
+				case 0 -> bf.loadPage("https://www.weather.go.kr/w/index.do");
+				case 1 -> bf.loadPage("https://www.airkorea.or.kr/index");
+			}
+		}
 	}
 }

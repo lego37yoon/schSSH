@@ -3,12 +3,15 @@ package pw.pbdiary.sch.sshwindows;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import pw.pbdiary.sch.sshwindows.func.BrowserFrame;
 import pw.pbdiary.sch.sshwindows.func.DatabaseController;
 import pw.pbdiary.sch.sshwindows.func.GetDate;
 import pw.pbdiary.sch.sshwindows.func.GetNotice;
@@ -50,6 +53,8 @@ public class Main {
 		GetDate gd = new GetDate();
 		//UI 설정
 		FlatLightLaf.setup();
+		//브라우저 인스턴스 미리 만들기
+		BrowserFrame browserWindow = new BrowserFrame();
 		//글꼴 설정
 		Font celciusFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 28);
 		Font titleFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 18);
@@ -64,7 +69,7 @@ public class Main {
 		
 		//학사일정, 공지사항, 학사공지
 		
-		JPanel noticePanel = new NoticePanel(titleFont, contentFont, parser, gd);
+		JPanel noticePanel = new NoticePanel(titleFont, contentFont, parser, gd, browserWindow);
 		frame.getContentPane().add(noticePanel);
 		
 		// 수업 시간표
@@ -82,7 +87,7 @@ public class Main {
 		frame.getContentPane().add(editorPanel);
 		
 		//날씨
-		JPanel weatherPanel = new WeatherPanel(titleFont, celciusFont, contentFont);
+		JPanel weatherPanel = new WeatherPanel(titleFont, celciusFont, contentFont, browserWindow);
 		frame.getContentPane().add(weatherPanel);
 		
 		//메뉴 패널
@@ -90,5 +95,12 @@ public class Main {
 		frame.getContentPane().add(menuPanel);
 		
 		frame.setVisible(true);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				browserWindow.disposeFrame();
+				frame.dispose();
+			}
+		});
 	}
 }
