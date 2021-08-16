@@ -1,4 +1,4 @@
-package pw.pbdiary.sch.sshwindows.func;
+package pw.pbdiary.sch.sshwindows.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

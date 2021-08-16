@@ -9,12 +9,13 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
-import pw.pbdiary.sch.sshwindows.func.BrowserFrame;
 import pw.pbdiary.sch.sshwindows.func.DatabaseController;
 import pw.pbdiary.sch.sshwindows.func.GetDate;
 import pw.pbdiary.sch.sshwindows.func.GetNotice;
+import pw.pbdiary.sch.sshwindows.panel.BrowserFrame;
 import pw.pbdiary.sch.sshwindows.panel.MemoPanel;
 import pw.pbdiary.sch.sshwindows.panel.MenuPanel;
 import pw.pbdiary.sch.sshwindows.panel.NoticePanel;
@@ -52,7 +53,13 @@ public class Main {
 		//시간 받아오기
 		GetDate gd = new GetDate();
 		//UI 설정
-		FlatLightLaf.setup();
+		String theme = dbController.getSettings("THEME");
+		if (theme.equals("dark")) {
+			FlatDarkLaf.setup();
+		} else {
+			FlatLightLaf.setup();
+			System.out.println("기본값으로 설정합니다.");
+		}
 		//브라우저 인스턴스 미리 만들기
 		BrowserFrame browserWindow = new BrowserFrame();
 		//글꼴 설정
@@ -91,7 +98,7 @@ public class Main {
 		frame.getContentPane().add(weatherPanel);
 		
 		//메뉴 패널
-		JPanel menuPanel = new MenuPanel(titleFont, contentFont);
+		JPanel menuPanel = new MenuPanel(titleFont, contentFont, dbController);
 		frame.getContentPane().add(menuPanel);
 		
 		frame.setVisible(true);

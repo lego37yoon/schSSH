@@ -2,7 +2,7 @@ package pw.pbdiary.sch.sshwindows.func;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.util.HashMap;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -32,10 +32,32 @@ public class DatabaseController {
 		stm.executeUpdate("INSERT OR IGNORE INTO MEMO (ID, MEMO) VALUES(1, '<html></html>');");
 		
 		stm.executeUpdate("CREATE TABLE IF NOT EXISTS SETTINGS (" //설정
-				+ "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," //설정값 ID
-				+ "TYPE TEXT NOT NULL," //설정값 이름
+				+ "TYPE TEXT NOT NULL PRIMARY KEY," //설정값 이름
 				+ "VALUE TEXT NOT NULL);"); //설정값 내용
 		return stm;
+	}
+	
+	public String getSettings(String type) {
+		Statement stm = null;
+		ResultSet rs = null;
+		try {
+			stm = initDatabase();
+			rs = stm.executeQuery("SELECT VALUE FROM SETTINGS WHERE TYPE='" + type +"';");
+			String returnValue = rs.getString("VALUE");
+			rs.close();
+			return returnValue;
+		} catch (SQLException e) {
+			System.out.println("값이 지정되지 않았습니다.");
+			return "";
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public ResultSet getDo(LocalDate day) {
@@ -69,7 +91,6 @@ public class DatabaseController {
 			try {
 				stm.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
 		
@@ -218,5 +239,19 @@ public class DatabaseController {
 		}
 		
 		return true;
+	}
+
+	public boolean saveSettings(HashMap<String, String> settings) {
+		try {
+			Statement stm = initDatabase();
+			for (String key : settings.keySet()) {
+				stm.executeUpdate("INSERT INTO SETTINGS (TYPE, VALUE) VALUES('" + key + "', '" + settings.get(key) + "') ON CONFLICT(TYPE) DO UPDATE SET VALUE=excluded.VALUE;");
+			}
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("데이터베이스 작업에 실패하였습니다.");
+			return false;
+		}
 	}
 }

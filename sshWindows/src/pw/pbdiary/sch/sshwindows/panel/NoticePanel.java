@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
-import pw.pbdiary.sch.sshwindows.func.BrowserFrame;
 import pw.pbdiary.sch.sshwindows.func.GetDate;
 import pw.pbdiary.sch.sshwindows.func.GetNotice;
 

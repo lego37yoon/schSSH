@@ -13,7 +13,6 @@ import javax.swing.SwingConstants;
 
 import org.apache.batik.swing.JSVGCanvas;
 
-import pw.pbdiary.sch.sshwindows.func.BrowserFrame;
 import pw.pbdiary.sch.sshwindows.func.GetAirPM;
 import pw.pbdiary.sch.sshwindows.func.GetWeather;
 
