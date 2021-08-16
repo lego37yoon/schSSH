@@ -254,4 +254,10 @@ public class DatabaseController {
 			return false;
 		}
 	}
+	
+	public boolean saveSetting(String type, String value) {
+		HashMap<String, String> singleSet = new HashMap<String, String>();
+		singleSet.put(type, value);
+		return saveSettings(singleSet);
+	}
 }

@@ -61,7 +61,8 @@ public class Main {
 			System.out.println("기본값으로 설정합니다.");
 		}
 		//브라우저 인스턴스 미리 만들기
-		BrowserFrame browserWindow = new BrowserFrame();
+		BrowserFrame browserWindow = new BrowserFrame(dbController);
+		dbController.saveSetting("REDIRECT_URL","");
 		//글꼴 설정
 		Font celciusFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 28);
 		Font titleFont = new Font("맑은 고딕 Semilight", Font.PLAIN, 18);
@@ -98,7 +99,7 @@ public class Main {
 		frame.getContentPane().add(weatherPanel);
 		
 		//메뉴 패널
-		JPanel menuPanel = new MenuPanel(titleFont, contentFont, dbController);
+		JPanel menuPanel = new MenuPanel(titleFont, contentFont, dbController, browserWindow);
 		frame.getContentPane().add(menuPanel);
 		
 		frame.setVisible(true);

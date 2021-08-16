@@ -22,7 +22,7 @@ public class SettingsFrame extends JFrame {
 
 	public SettingsFrame(Font contentFont, DatabaseController dbController) {
 		JPanel settingsPanel = new JPanel();
-		settingsPanel.setLayout(new GridLayout(5, 2, 0, 10));
+		settingsPanel.setLayout(new GridLayout(7, 2, 0, 10));
 		
 		JLabel schIDLabel = new JLabel("순천향 ID");
 		schIDLabel.setFont(contentFont);
@@ -33,7 +33,7 @@ public class SettingsFrame extends JFrame {
 		schIDField.setText(dbController.getSettings("ID"));
 		settingsPanel.add(schIDField);
 		
-		JLabel schPWLabel = new JLabel("순천향 PW");
+		JLabel schPWLabel = new JLabel("순천향 비밀번호");
 		schPWLabel.setFont(contentFont);
 		settingsPanel.add(schPWLabel);
 		
@@ -41,6 +41,24 @@ public class SettingsFrame extends JFrame {
 		schPWField.setFont(contentFont);
 		schPWField.setText(dbController.getSettings("PW"));
 		settingsPanel.add(schPWField);
+		
+		JLabel mailIDLabel = new JLabel("메일 ID");
+		mailIDLabel.setFont(contentFont);
+		settingsPanel.add(mailIDLabel);
+		
+		JTextField mailIDField = new JTextField();
+		mailIDField.setFont(contentFont);
+		mailIDField.setText(dbController.getSettings("MAIL_ID"));
+		settingsPanel.add(mailIDField);
+		
+		JLabel mailPWLabel = new JLabel("메일 비밀번호");
+		mailPWLabel.setFont(contentFont);
+		settingsPanel.add(mailPWLabel);
+		
+		JPasswordField mailPWField = new JPasswordField();
+		mailPWField.setFont(contentFont);
+		mailPWField.setText(dbController.getSettings("MAIL_PW"));
+		settingsPanel.add(mailPWField);
 		
 		JLabel themeLabel = new JLabel("테마 설정");
 		themeLabel.setFont(contentFont);
@@ -66,12 +84,12 @@ public class SettingsFrame extends JFrame {
 		
 		JButton saveSettings = new JButton("저장");
 		saveSettings.setFont(contentFont);
-		saveSettings.addMouseListener(new SaveBtnListener(dbController, schIDField, schPWField, themeCombo));
+		saveSettings.addMouseListener(new SaveBtnListener(dbController, schIDField, schPWField, mailIDField, mailPWField, themeCombo));
 		settingsPanel.add(saveSettings);
 		
 		JButton removeValues = new JButton("초기화");
 		removeValues.setFont(contentFont);
-		removeValues.addMouseListener(new RemoveBtnListener(dbController, schIDField, schPWField, themeCombo));
+		removeValues.addMouseListener(new RemoveBtnListener(schIDField, schPWField, mailIDField, mailPWField, themeCombo));
 		settingsPanel.add(removeValues);
 		
 		setContentPane(settingsPanel);
@@ -84,12 +102,16 @@ public class SettingsFrame extends JFrame {
 	private class SaveBtnListener extends MouseAdapter {
 		private JTextField id;
 		private JPasswordField pw;
+		private JTextField mailID;
+		private JPasswordField mailPW;
 		private JComboBox<String> theme;
 		private DatabaseController db;
 		
-		public SaveBtnListener(DatabaseController dbController, JTextField id, JPasswordField pw, JComboBox<String> theme) {
+		public SaveBtnListener(DatabaseController dbController, JTextField id, JPasswordField pw, JTextField mailID, JPasswordField mailPW, JComboBox<String> theme) {
 			this.id = id;
 			this.pw = pw;
+			this.mailID = mailID;
+			this.mailPW = mailPW;
 			this.db = dbController;
 			this.theme = theme;
 		}
@@ -98,6 +120,8 @@ public class SettingsFrame extends JFrame {
 			HashMap<String, String> settings = new HashMap<String, String>();
 			settings.put("ID", id.getText());
 			settings.put("PW", String.valueOf(pw.getPassword()));
+			settings.put("MAIL_ID", mailID.getText());
+			settings.put("MAIL_PW", String.valueOf(mailPW.getPassword()));
 			settings.put("THEME", (String)theme.getSelectedItem());
 			db.saveSettings(settings);
 			JOptionPane.showMessageDialog(null, "저장이 완료되었습니다.\n테마 변경은 프로그램을 재시작해야 적용됩니다.", "안내", JOptionPane.INFORMATION_MESSAGE);
@@ -108,25 +132,24 @@ public class SettingsFrame extends JFrame {
 	private class RemoveBtnListener extends MouseAdapter {
 		private JTextField id;
 		private JPasswordField pw;
+		private JTextField mailID;
+		private JPasswordField mailPW;
 		private JComboBox<String> theme;
-		private DatabaseController db;
 		
-		public RemoveBtnListener(DatabaseController dbController, JTextField id, JPasswordField pw, JComboBox<String> theme) {
+		public RemoveBtnListener(JTextField id, JPasswordField pw, JTextField mailID, JPasswordField mailPW, JComboBox<String> theme) {
 			this.id = id;
 			this.pw = pw;
-			this.db = dbController;
+			this.mailID = mailID;
+			this.mailPW = mailPW;
 			this.theme = theme;
 		}
 		
 		public void mouseClicked(MouseEvent e) {
 			id.setText("");
 			pw.setText("");
+			mailID.setText("");
+			mailPW.setText("");
 			theme.setSelectedIndex(0);
-			HashMap<String, String> settings = new HashMap<String, String>();
-			settings.put("ID", "");
-			settings.put("PW", "");
-			settings.put("THEME", "light");
-			db.saveSettings(settings);
 		}
 	}
 }
