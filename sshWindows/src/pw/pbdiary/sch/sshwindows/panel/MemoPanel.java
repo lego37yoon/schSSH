@@ -71,12 +71,13 @@ public class MemoPanel extends JPanel {
 	private class SaveMemoListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
 			db.saveMemo(editorPane.getText());
+			JOptionPane.showMessageDialog(null, "저장이 완료되었습니다.", "안내", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
 	private class RemoveMemoListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
-			db.deleteMemo();
+			editorPane.setText("");
 		}
 	}
 	
@@ -93,7 +94,7 @@ public class MemoPanel extends JPanel {
 				
 				JOptionPane.showMessageDialog(null, "저장이 완료되었습니다.", "안내", JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException e) {
-				System.out.println("파일을 쓰지 못했습니다.");
+				JOptionPane.showMessageDialog(null, "저장하지 못했습니다.", "저장 실패", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

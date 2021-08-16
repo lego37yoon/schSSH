@@ -69,7 +69,35 @@ public class DatabaseController {
 			rs = stm.executeQuery("SELECT ID, TITLE, DONE FROM TODO WHERE DATE=" + date + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("할 일를 얻어오지 못했습니다.");
+			System.out.println("할 일을 얻어오지 못했습니다.");
+		}
+		
+		return rs;
+	}
+	
+	public ResultSet getDoById(int id) {
+		Statement stm;
+		ResultSet rs = null;
+		try {
+			stm = initDatabase();
+			rs = stm.executeQuery("SELECT TITLE, DATE, ALARM, DONE FROM TODO WHERE ID=" + id + ";");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("할 일을 얻어오지 못했습니다.");
+		}
+		
+		return rs;
+	}
+	
+	public ResultSet getAllDo() {
+		Statement stm;
+		ResultSet rs = null;
+		try {
+			stm = initDatabase();
+			rs = stm.executeQuery("SELECT * FROM TODO;");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("할 일을 얻어오지 못했습니다.");
 		}
 		
 		return rs;
@@ -101,10 +129,16 @@ public class DatabaseController {
 		
 		String date = "'" + day.toString() + "'";
 		String titleSQL = "'" + title + "'";
+		int doneInt = 0;
+		if (done == true) {
+			doneInt = 1;
+		} else {
+			doneInt = 0;
+		}
 		
 		try {
 			Statement stm = initDatabase();
-			stm.executeUpdate("INSERT INTO TODO (DATE, TITLE, DONE) VALUES (" + date + titleSQL + done +");"); //할 일 추가
+			stm.executeUpdate("INSERT INTO TODO (DATE, TITLE, DONE) VALUES (" + date + "," + titleSQL + "," + doneInt +");"); //할 일 추가
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("데이터베이스 작업을 실패하였습니다.");
@@ -119,10 +153,16 @@ public class DatabaseController {
 		String date = "'" + day.toString() + "'";
 		String titleSQL = "'" + title + "'";
 		String alarmSQL = "'" + alarm.toString() + "'";
+		int doneInt;
+		if (done == true) {
+			doneInt = 1;
+		} else {
+			doneInt = 0;
+		}
 		
 		try {
 			Statement stm = initDatabase();
-			stm.executeUpdate("INSERT INTO TODO (DATE, TITLE, ALARM, DONE) VALUES (" + date + titleSQL + alarmSQL + done +");"); //할 일 추가
+			stm.executeUpdate("INSERT INTO TODO (DATE, TITLE, ALARM, DONE) VALUES (" + date + "," + titleSQL + "," + alarmSQL + "," + doneInt +");"); //할 일 추가
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("데이터베이스 작업에 실패하였습니다.");
@@ -202,9 +242,9 @@ public class DatabaseController {
 		try {
 			Statement stm = initDatabase();
 			if (done == true) {
-				stm.executeUpdate("UPDATE TODO SET DONE=0 WHERE ID=" + id + ";");
-			} else {
 				stm.executeUpdate("UPDATE TODO SET DONE=1 WHERE ID=" + id + ";");
+			} else {
+				stm.executeUpdate("UPDATE TODO SET DONE=0 WHERE ID=" + id + ";");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

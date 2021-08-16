@@ -82,12 +82,12 @@ public class Main {
 		
 		// 수업 시간표
 		
-		JPanel timeTablePanel = new TimeTablePanel(titleFont, contentFont);
+		JPanel timeTablePanel = new TimeTablePanel(titleFont, contentFont, dbController);
 		frame.getContentPane().add(timeTablePanel);
 		
 		//오늘의 할 일
 		
-		JPanel todoPanel = new ToDoPanel(titleFont, contentFont, dbController, gd);
+		ToDoPanel todoPanel = new ToDoPanel(titleFont, contentFont, dbController, gd);
 		frame.getContentPane().add(todoPanel);
 		
 		// 간단 메모
@@ -108,6 +108,11 @@ public class Main {
 			public void windowClosing(WindowEvent e) {
 				browserWindow.disposeFrame();
 				frame.dispose();
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				todoPanel.refreshList(dbController, gd);
 			}
 		});
 	}

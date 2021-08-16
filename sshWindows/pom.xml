@@ -23,7 +23,7 @@
           <release>16</release>
         </configuration>
       </plugin>
-    </plugins>
+  </plugins>
   </build>
   <dependencies>
   	<dependency>
@@ -50,6 +50,11 @@
   		<groupId>org.apache.xmlgraphics</groupId>
   		<artifactId>batik-swing</artifactId>
   		<version>1.14</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.github.lgooddatepicker</groupId>
+  		<artifactId>LGoodDatePicker</artifactId>
+  		<version>11.2.1</version>
   	</dependency>
   </dependencies>
 </project>
