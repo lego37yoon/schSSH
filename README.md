@@ -21,3 +21,5 @@ Requires Java SE 16 to build this program
   - umbrella-solid
   - temperature-high-solid
   - snowflake-regular
+- [JCEF](https://github.com/chromiumembedded/java-cef): BSD License 
+- [LGoodDatePicker](https://github.com/LGoodDatePicker/LGoodDatePicker): MIT License
