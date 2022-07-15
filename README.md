@@ -1,14 +1,14 @@
 # schSSH
 SOONCHUNHYANG Student Helper - shows notice, time table, web mail for SCH Students and more.
 
+> 2021 Summer OS Lab Java Seminar Personal Project
+
  - Platform : Windows
  - Language: Java
  - Required Library: Swing, Jsoup, JCEF, FlatLaf, Batik-Swing, org.json, SQLite-jdbc
  - Development Environment: Eclipse
 
 Requires Java SE 16 to build this program
-
-
 
 #### Open Source License
 
